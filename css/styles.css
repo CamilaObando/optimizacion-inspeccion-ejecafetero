@@ -607,7 +607,7 @@ strong { font-weight: 700; }
 .dbl-hint .ic { width: 1.15em; height: 1.15em; }
 .dbl:hover .dbl-hint { transform: translateX(-4px); }
 
-.dbl-row { display: grid; grid-template-columns: minmax(190px, 1.15fr) 2.1fr 86px 104px 92px; column-gap: var(--gap); align-items: center; }
+.dbl-row { display: grid; grid-template-columns: minmax(200px, 1fr) 2.4fr; column-gap: var(--gap); align-items: center; }
 .dbl-lab strong { display: block; font-size: 1.05rem; color: var(--ink); line-height: 1.25; }
 .dbl-lab small { display: block; color: var(--muted); font-size: .85rem; margin-top: 3px; }
 .dbl-row:not(.dbl-head):not(.dbl-foot) { padding: 13px 0; }
@@ -720,9 +720,8 @@ strong { font-weight: 700; }
   .kpi-grid { grid-template-columns: 1fr 1fr; }
   .value-grid { grid-template-columns: 1fr; }
   .city-head { grid-template-columns: 1fr; }
-  .dbl-row { grid-template-columns: minmax(150px, 1fr) 1.8fr 72px 88px 78px; --gap: 12px; }
+  .dbl-row { grid-template-columns: minmax(160px, 1fr) 2fr; --gap: 12px; }
   .dbl-lab strong { font-size: .95rem; }
-  .dbl-v { font-size: .95rem; }
 }
 @media (max-width: 760px) {
   :root { --top: 64px; }
@@ -749,15 +748,10 @@ strong { font-weight: 700; }
   .sc-names { font-size: .72rem; }
   .rec-head { flex-direction: column; align-items: flex-start; gap: 14px; }
   .dbl { padding: 20px 16px 14px; }
-  .dbl-row { grid-template-columns: 1fr auto auto; column-gap: 10px; }
-  .dbl-row .dbl-lab, .dbl-row .dbl-trk { grid-column: 1 / -1; }
+  .dbl-row { grid-template-columns: 1fr; }
   .dbl-row:not(.dbl-head):not(.dbl-foot) { padding: 14px 0 10px; border-top: 1px solid var(--line); }
   .dbl-row:not(.dbl-head):not(.dbl-foot) .dbl-trk { margin: 8px 0 6px; min-height: 40px; }
-  .dbl-head .dbl-lab, .dbl-head .dbl-v, .dbl-foot .dbl-lab, .dbl-foot .dbl-v { display: none; }
-  .dbl-v.base { text-align: left; }
-  .dbl-v.base::after { content: " →"; color: var(--muted); }
-  .dbl-v { font-size: .95rem; }
-  .pill { font-size: .85rem; }
+  .dbl-head .dbl-lab, .dbl-foot .dbl-lab { display: none; }
   .dbl-pl.base { font-size: .72rem; }
   .dbl-pl.new { font-size: .82rem; }
   .dbl-tick { font-size: .68rem; }

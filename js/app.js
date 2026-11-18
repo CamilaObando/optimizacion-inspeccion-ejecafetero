@@ -620,7 +620,7 @@ function dblHTML(r) {
   const pct = v => fmt(v, v % 1 ? 1 : 0) + ' %';
   const grid = c.ticks.map(t => `<span class="dbl-gl" style="left:${pos(t)}"></span>`).join('') +
     `<span class="dbl-ref" style="left:${pos(100)}"></span>`;
-  const rows = c.rows.map(([name, ref, b, n, vb, vn, d, grey], i) => `
+  const rows = c.rows.map(([name, ref, b, n], i) => `
     <div class="dbl-row ${n < b ? 'rev' : ''}" style="--i:${i};--b:${pos(b)};--n:${pos(n)};--lo:${pos(Math.min(b, n))};--w:${(Math.abs(n - b) / (hi - lo) * 100).toFixed(2)}%">
       <div class="dbl-lab"><strong>${name}</strong><small>${ref}</small></div>
       <div class="dbl-trk">${grid}
@@ -628,9 +628,6 @@ function dblHTML(r) {
         <span class="dbl-dot base"></span><span class="dbl-dot new"></span>
         <span class="dbl-pl base">${pct(b)}</span><span class="dbl-pl new">${pct(n)}</span>
       </div>
-      <div class="dbl-v base">${vb}</div>
-      <div class="dbl-v new">${vn}</div>
-      <div class="dbl-v chg"><span class="pill ${grey ? 'grey' : ''}">${d}</span></div>
     </div>`).join('');
   return `<div class="rec rec-dbl">
     <div class="rec-head"><span class="rec-badge ${r.dark ? 'dark' : ''}">${r.id}</span>
@@ -644,13 +641,11 @@ function dblHTML(r) {
       <div class="dbl-row dbl-head">
         <div class="dbl-lab"></div>
         <div class="dbl-trk">${grid}<span class="dbl-reflab" style="left:${pos(100)}">100 % de la referencia</span></div>
-        <div class="dbl-v">Base</div><div class="dbl-v">Con ${c.label}</div><div class="dbl-v">Cambio</div>
       </div>
       ${rows}
       <div class="dbl-row dbl-foot">
         <div class="dbl-lab"></div>
         <div class="dbl-trk">${c.ticks.map(t => `<span class="dbl-tick" style="left:${pos(t)}">${t} %</span>`).join('')}</div>
-        <div class="dbl-v"></div><div class="dbl-v"></div><div class="dbl-v"></div>
       </div>
     </div>
     ${c.callout ? `<div class="dbl-callout anim"><span>${c.callout[0]}</span><strong>${c.callout[1]}</strong></div>` : ''}
