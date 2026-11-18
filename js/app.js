@@ -158,6 +158,47 @@ const RECS = [
     file: 'R4_Acompanamiento.gms' },
 ];
 
+/* Gráficas base vs. recomendación (R1, R2, R1+R2).
+   Fila: [indicador, referencia, % base, % con rec, valor base, valor con rec, cambio, gris?] */
+const SRC = 'Fuente: corridas del modelo en GAMS/CPLEX (gap 0 %) con los datos del proyecto. Base: solución original (309 puntos).';
+const DBL = {
+  R1: { label: 'R1',
+    title: 'Con R1, <em>5,5 % más</em> de presupuesto atiende todas las urgencias altas',
+    sub: 'Cada indicador en porcentaje de su referencia: base frente a la recomendación R1 (presupuesto de $10.550.000)',
+    ticks: [50, 60, 70, 80, 90, 100, 110],
+    rows: [['Urgencias altas atendidas', 'sobre 16 edificaciones', 81, 100, '13 de 16', '16 de 16', '+3'],
+      ['Equipos de 4 personas en Pereira', 'sobre los 2 equipos de la ciudad', 50, 100, '1', '2', '+1'],
+      ['Puntaje de Pereira', 'sobre 160 puntos posibles', 71, 89.4, '113', '143', '+30 pts'],
+      ['Puntaje total Z', 'sobre 369 puntos posibles', 84, 91.9, '309', '339', '+9,7 %'],
+      ['Edificaciones inspeccionadas', 'sobre 40 edificaciones', 85, 82.5, '34', '33', '−1', 1],
+      ['Costo de la misión', 'sobre el presupuesto original de $10 M', 99, 105.5, '$9,90 M', '$10,55 M', '+6,6 %', 1]],
+    src: SRC + ' R1: presupuesto ampliado a $10.550.000.' },
+  R2: { label: 'R2',
+    title: 'Con R2, <em>una hora más</em> al día suma 18 puntos casi sin costo',
+    sub: 'Cada indicador en porcentaje de su referencia: base frente a la recomendación R2 (jornada de 9 horas diarias)',
+    ticks: [70, 80, 90, 100, 110],
+    rows: [['Puntaje de Armenia', 'sobre 87 puntos posibles', 85, 94.3, '74', '82', '+8 pts'],
+      ['Puntaje de Pereira', 'sobre 160 puntos posibles', 71, 76.9, '113', '123', '+10 pts'],
+      ['Puntaje total Z', 'sobre 369 puntos posibles', 84, 88.6, '309', '327', '+5,8 %'],
+      ['Edificaciones inspeccionadas', 'sobre 40 edificaciones', 85, 90, '34', '36', '+2'],
+      ['Urgencias altas atendidas', 'sobre 16 edificaciones', 81, 87.5, '13 de 16', '14 de 16', '+1'],
+      ['Horas por equipo', 'sobre la jornada actual de 24 h (8 h x 3 días)', 100, 112.5, '24 h', '27 h', '+3 h', 1],
+      ['Costo de la misión', 'sobre el presupuesto original de $10 M', 99, 99.5, '$9,90 M', '$9,95 M', '+0,5 %', 1]],
+    src: SRC + ' R2: 27 horas por equipo (9 h diarias durante 3 días).' },
+  'R1+R2': { label: 'R1 + R2',
+    title: 'R1 + R2: <em>356 puntos</em> y todas las urgencias altas por $10,55 M',
+    sub: 'Cada indicador en porcentaje de su referencia: base frente a R1 + R2 (presupuesto de $10.550.000 y jornada de 9 horas diarias)',
+    ticks: [70, 80, 90, 100, 110],
+    rows: [['Urgencias altas atendidas', 'sobre 16 edificaciones', 81, 100, '13 de 16', '16 de 16', '+3'],
+      ['Puntaje de Pereira', 'sobre 160 puntos posibles', 71, 95, '113', '152', '+39 pts'],
+      ['Ciudad peor atendida', 'base: Pereira · con R1 + R2: Armenia', 71, 94.3, '71 %', '94 %', '+23 p.p.'],
+      ['Puntaje total Z', 'sobre 369 puntos posibles', 84, 96.5, '309', '356', '+15,2 %'],
+      ['Edificaciones inspeccionadas', 'sobre 40 edificaciones', 85, 92.5, '34', '37', '+3'],
+      ['Costo de la misión', 'sobre el presupuesto original de $10 M', 99, 105.5, '$9,90 M', '$10,55 M', '+6,6 %', 1]],
+    callout: ['Sin la hora extra, llegar a 356 puntos exige un sexto equipo y $12.400.000:', 'la jornada de 9 h ahorra $1.850.000'],
+    src: SRC + ' R1 + R2: $10.550.000 y 27 h por equipo.' },
+};
+
 const SCEN = [
   ['Base', 113, 122, 74, '$9,90 M'], ['R1', 143, 122, 74, '$10,55 M'], ['R2', 123, 122, 82, '$9,95 M'],
   ['R1+R2', 152, 122, 82, '$10,55 M'], ['R3', 133, 92, 74, '$10,25 M'], ['R4', 113, 122, 74, '$10,20 M'], ['Todas', 129, 122, 82, '$10,45 M'],
@@ -571,7 +612,80 @@ function renderRecTabs() {
     `<button class="rec-tab" role="tab" data-i="${i}"><span class="rb">${id}</span><small>${subs[i]}</small></button>`).join('');
   $$('#recTabs .rec-tab').forEach(b => b.addEventListener('click', () => goRec(+b.dataset.i)));
 }
+/* Gráfica de mancuernas: base (azul) → con la recomendación (naranja) */
+function dblHTML(r) {
+  const c = DBL[r.id];
+  const lo = c.ticks[0] - 8, hi = c.ticks[c.ticks.length - 1] + 8;
+  const pos = v => ((v - lo) / (hi - lo) * 100).toFixed(2) + '%';
+  const pct = v => fmt(v, v % 1 ? 1 : 0) + ' %';
+  const grid = c.ticks.map(t => `<span class="dbl-gl" style="left:${pos(t)}"></span>`).join('') +
+    `<span class="dbl-ref" style="left:${pos(100)}"></span>`;
+  const rows = c.rows.map(([name, ref, b, n, vb, vn, d, grey], i) => `
+    <div class="dbl-row ${n < b ? 'rev' : ''}" style="--i:${i};--b:${pos(b)};--n:${pos(n)};--lo:${pos(Math.min(b, n))};--w:${(Math.abs(n - b) / (hi - lo) * 100).toFixed(2)}%">
+      <div class="dbl-lab"><strong>${name}</strong><small>${ref}</small></div>
+      <div class="dbl-trk">${grid}
+        <span class="dbl-bar"></span>
+        <span class="dbl-dot base"></span><span class="dbl-dot new"></span>
+        <span class="dbl-pl base">${pct(b)}</span><span class="dbl-pl new">${pct(n)}</span>
+      </div>
+      <div class="dbl-v base">${vb}</div>
+      <div class="dbl-v new">${vn}</div>
+      <div class="dbl-v chg"><span class="pill ${grey ? 'grey' : ''}">${d}</span></div>
+    </div>`).join('');
+  return `<div class="rec rec-dbl">
+    <div class="rec-head"><span class="rec-badge ${r.dark ? 'dark' : ''}">${r.id}</span>
+      <div><p class="rec-kicker">${r.kicker}</p><h3 class="long">${c.title}</h3></div></div>
+    <p class="dbl-sub">${c.sub}</p>
+    <div class="card dbl anim" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Ver la tabla resumen de ${c.label}">
+      <div class="dbl-top">
+        <div class="dbl-legend"><span><i class="base"></i>Base (modelo original)</span><span><i class="new"></i>Con ${c.label}</span></div>
+        <span class="dbl-hint">${ic('pointer')} Haz clic en la gráfica para ver la tabla</span>
+      </div>
+      <div class="dbl-row dbl-head">
+        <div class="dbl-lab"></div>
+        <div class="dbl-trk">${grid}<span class="dbl-reflab" style="left:${pos(100)}">100 % de la referencia</span></div>
+        <div class="dbl-v">Base</div><div class="dbl-v">Con ${c.label}</div><div class="dbl-v">Cambio</div>
+      </div>
+      ${rows}
+      <div class="dbl-row dbl-foot">
+        <div class="dbl-lab"></div>
+        <div class="dbl-trk">${c.ticks.map(t => `<span class="dbl-tick" style="left:${pos(t)}">${t} %</span>`).join('')}</div>
+        <div class="dbl-v"></div><div class="dbl-v"></div><div class="dbl-v"></div>
+      </div>
+    </div>
+    ${c.callout ? `<div class="dbl-callout anim"><span>${c.callout[0]}</span><strong>${c.callout[1]}</strong></div>` : ''}
+    <p class="dbl-src">${c.src}</p>
+  </div>`;
+}
+
+/* Popup con la tabla resumen de la recomendación */
+const modal = document.createElement('div');
+modal.className = 'modal';
+modal.innerHTML = `<div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <button class="modal-x" aria-label="Cerrar">&times;</button><div id="modalBody"></div></div>`;
+document.body.appendChild(modal);
+let modalReturn = null;
+function openRecTable(r) {
+  const c = DBL[r.id];
+  $('#modalBody').innerHTML = `
+    <p class="eyebrow" style="margin-bottom:6px">Tabla resumen</p>
+    <h3 id="modalTitle" class="modal-title">Base frente a <em>${c.label}</em></h3>
+    <div class="ctable-card"><table class="ctable"><thead><tr><th>Indicador</th><th>Base</th><th>Con ${c.label}</th></tr></thead>
+      <tbody>${r.rows.map(([a, b, v], k) => `<tr style="animation-delay:${120 + k * 60}ms"><td>${a}</td><td>${b}</td><td class="${b !== v ? 'chg' : ''}">${v}</td></tr>`).join('')}</tbody></table></div>
+    ${r.note ? `<p class="rec-note" style="margin-top:14px">${r.note}</p>` : ''}`;
+  modalReturn = document.activeElement;
+  modal.classList.add('open');
+  $('.modal-x', modal).focus();
+}
+function closeModal() {
+  if (!modal.classList.contains('open')) return;
+  modal.classList.remove('open');
+  modalReturn && modalReturn.focus && modalReturn.focus();
+}
+modal.addEventListener('click', e => { if (e.target === modal || e.target.closest('.modal-x')) closeModal(); });
+
 function recHTML(r) {
+  if (DBL[r.id]) return dblHTML(r);
   const max = 370;
   return `<div class="rec">
     <div class="rec-head"><span class="rec-badge ${r.dark ? 'dark' : ''}">${r.id}</span>
@@ -632,8 +746,15 @@ function summaryHTML() {
 function goRec(i) {
   const n = RECS.length + 1;
   recIdx = (i + n) % n;
+  closeModal();
   $$('#recTabs .rec-tab').forEach((b, k) => { b.classList.toggle('active', k === recIdx); b.setAttribute('aria-selected', k === recIdx); });
   $('#recStage').innerHTML = recIdx < RECS.length ? recHTML(RECS[recIdx]) : summaryHTML();
+  const chart = $('#recStage .dbl');
+  if (chart) {
+    const r = RECS[recIdx];
+    chart.addEventListener('click', () => openRecTable(r));
+    chart.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openRecTable(r); } });
+  }
   $$('#recStage .sc-seg').forEach(s => {
     s.addEventListener('mousemove', e => showTip(s.dataset.tip, e.clientX, e.clientY));
     s.addEventListener('mouseleave', hideTip);
@@ -731,6 +852,7 @@ function init() {
 
   // Teclado para presentar: ← → recorren pasos/recomendaciones; 1-3 cambian de pestaña
   document.addEventListener('keydown', e => {
+    if (modal.classList.contains('open')) { if (e.key === 'Escape') closeModal(); return; }
     if (currentView !== 'proyecto' || e.target.closest('input, textarea') || e.metaKey || e.ctrlKey || e.altKey) return;
     if (['1', '2', '3'].includes(e.key)) { location.hash = '#/proyecto/' + ['resultados', 'conclusiones', 'recomendaciones'][+e.key - 1]; return; }
     const dir = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
