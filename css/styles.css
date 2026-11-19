@@ -250,6 +250,36 @@ strong { font-weight: 700; }
 .panel { padding: 48px 0 110px; animation: panelIn .6s var(--ease); }
 @keyframes panelIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
+/* ---------- contexto ---------- */
+.decisions { position: relative; }
+.decisions-line { position: absolute; left: 6%; right: 6%; top: 50%; height: 2px; background: var(--line); z-index: 0; border-radius: 2px; }
+.decisions-line span { display: block; height: 100%; width: 0; background: var(--orange); border-radius: 2px; transition: width 1.8s var(--ease) .3s; }
+.decision-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.decision { padding: 26px 26px 28px; position: relative; overflow: hidden; transition: transform .35s var(--ease), box-shadow .35s, border-color .35s; }
+.decision:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: rgba(232, 137, 28, .45); }
+.decision-n { display: block; font-family: var(--font-head); font-size: 3rem; font-weight: 600; color: var(--orange); line-height: 1; }
+.decision-ic { position: absolute; top: 22px; right: 22px; width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; background: var(--green-050); color: var(--green); transition: transform .4s var(--ease), background .3s, color .3s; }
+.decision-ic .ic { width: 22px; height: 22px; }
+.decision:hover .decision-ic { transform: rotate(-8deg) scale(1.1); background: var(--green); color: #fff; }
+.decision h3 { font-family: var(--font-body); font-size: 1.15rem; font-weight: 700; margin-top: 16px; line-height: 1.3; }
+.res-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.res { padding: 28px 28px 26px; transition: transform .35s var(--ease), box-shadow .35s; }
+.res:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.res-val { font-family: var(--font-head); font-size: clamp(2.8rem, 5vw, 3.8rem); font-weight: 600; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.res-cap { color: var(--ink-2); margin-top: 10px; }
+.res-dark { background: var(--green); border-color: var(--green); }
+.res-dark .res-val { color: #F7C58A; }
+.res-dark .res-cap { color: #D3E7DC; }
+.method-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; counter-reset: m; }
+.mstep { padding: 28px 30px 30px; position: relative; overflow: hidden; transition: transform .35s var(--ease), box-shadow .35s, border-color .35s; }
+.mstep::before { content: ""; position: absolute; left: 0; top: 0; height: 4px; width: 0; background: var(--orange); transition: width .6s var(--ease); }
+.mstep:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: rgba(15, 107, 75, .3); }
+.mstep:hover::before { width: 100%; }
+.mstep-n { display: inline-block; font-family: var(--font-head); font-size: 2.8rem; font-weight: 600; color: var(--orange); line-height: 1; margin-bottom: 14px; transition: transform .4s var(--ease); }
+.mstep:hover .mstep-n { transform: translateX(6px); }
+.mstep h3 { font-size: 1.4rem; margin-bottom: 8px; }
+.mstep p { color: var(--ink-2); }
+
 /* ---------- puntaje ---------- */
 .score-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 24px; }
 .score-card { padding: 44px 48px; }
@@ -718,6 +748,8 @@ strong { font-weight: 700; }
   .float-chip.c1 { left: -4%; }
   .float-chip.c2 { right: -4%; }
   .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .decision-grid, .res-grid, .method-grid { grid-template-columns: 1fr 1fr; }
+  .decisions-line { display: none; }
   .value-grid { grid-template-columns: 1fr; }
   .city-head { grid-template-columns: 1fr; }
   .dbl-row { grid-template-columns: minmax(160px, 1fr) 2fr; --gap: 12px; }
@@ -733,7 +765,7 @@ strong { font-weight: 700; }
   .nav a:not(.btn) { padding: .8em 1em; }
   .nav-cta { margin: 8px 0 0; justify-content: center; }
   .section { padding: 72px 0; }
-  .mv-grid, .kpi-grid, .teams, .concl-grid, .stat-pair { grid-template-columns: 1fr; }
+  .mv-grid, .kpi-grid, .teams, .concl-grid, .stat-pair, .method-grid { grid-template-columns: 1fr; }
   .team-grid { grid-template-columns: 1fr 1fr; }
   .process { flex-direction: column; align-items: flex-start; }
   .process-line { width: 2px; height: 18px; min-width: 0; flex: none; margin-left: 19px; background: repeating-linear-gradient(180deg, var(--line-2) 0 4px, transparent 4px 8px); }

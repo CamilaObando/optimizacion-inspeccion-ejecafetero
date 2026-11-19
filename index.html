@@ -26,7 +26,7 @@
       <a href="#/" data-go="nosotros">Nosotros</a>
       <a href="#/" data-go="valor">Propuesta de valor</a>
       <a href="#/" data-go="voluntariados">Nuestros voluntariados</a>
-      <a href="#/proyecto/resultados" class="btn btn-primary btn-sm nav-cta">Misión Eje Cafetero</a>
+      <a href="#/proyecto/contexto" class="btn btn-primary btn-sm nav-cta">Misión Eje Cafetero</a>
     </nav>
   </div>
 </header>
@@ -44,7 +44,7 @@
         <h1 class="reveal">Cada voluntario, <em>donde más se necesita.</em></h1>
         <p class="lead reveal">Somos una consultoría que convierte recursos limitados en planes de despliegue claros y comprobados para organizaciones de voluntariado.</p>
         <div class="hero-actions reveal">
-          <a href="#/proyecto/resultados" class="btn btn-primary btn-lg">Ver la Misión Eje Cafetero <i data-ic="arrowR"></i></a>
+          <a href="#/proyecto/contexto" class="btn btn-primary btn-lg">Ver la Misión Eje Cafetero <i data-ic="arrowR"></i></a>
           <a href="#/" data-go="voluntariados" class="btn btn-ghost btn-lg">Nuestros voluntariados</a>
         </div>
       </div>
@@ -133,7 +133,7 @@
         <h2>Despliegues que hemos planeado.</h2>
       </div>
       <div class="vol-grid">
-        <a href="#/proyecto/resultados" class="card vol-card vol-featured reveal">
+        <a href="#/proyecto/contexto" class="card vol-card vol-featured reveal">
           <div class="vol-top">
             <span class="tag tag-green"><span class="dot"></span>Proyecto actual</span>
             <span class="tag">Gestión de emergencias</span>
@@ -146,7 +146,7 @@
             <div><strong>40</strong><small>edificaciones</small></div>
             <div><strong>3</strong><small>ciudades</small></div>
           </div>
-          <span class="vol-link">Ver resultados <i data-ic="arrowR"></i></span>
+          <span class="vol-link">Ver el proyecto <i data-ic="arrowR"></i></span>
         </a>
         <div class="vol-side stagger">
           <article class="card vol-card reveal">
@@ -210,14 +210,79 @@
     <div class="wrap">
       <div class="subnav-track" role="tablist">
         <span class="subnav-ink" id="subnavInk"></span>
-        <a href="#/proyecto/resultados" role="tab" data-tab="resultados"><span class="sn-num">01</span> Resultados</a>
-        <a href="#/proyecto/conclusiones" role="tab" data-tab="conclusiones"><span class="sn-num">02</span> Conclusiones y análisis</a>
-        <a href="#/proyecto/recomendaciones" role="tab" data-tab="recomendaciones"><span class="sn-num">03</span> Recomendaciones</a>
+        <a href="#/proyecto/contexto" role="tab" data-tab="contexto"><span class="sn-num">01</span> Contexto</a>
+        <a href="#/proyecto/resultados" role="tab" data-tab="resultados"><span class="sn-num">02</span> Resultados</a>
+        <a href="#/proyecto/conclusiones" role="tab" data-tab="conclusiones"><span class="sn-num">03</span> Conclusiones y análisis</a>
+        <a href="#/proyecto/recomendaciones" role="tab" data-tab="recomendaciones"><span class="sn-num">04</span> Recomendaciones</a>
       </div>
     </div>
   </div>
 
-  <!-- ============ 01 RESULTADOS ============ -->
+  <!-- ============ 01 CONTEXTO ============ -->
+  <section class="panel" id="p-contexto" data-panel="contexto" hidden>
+    <div class="wrap">
+
+      <div class="section-head reveal">
+        <p class="eyebrow">El problema</p>
+        <h2>Una misión con <em>recursos que no alcanzan</em> para todas.</h2>
+        <p>Tras el terremoto del 10 de agosto de 2026, hay que organizar una misión de voluntarios para inspeccionar edificaciones dañadas en Pereira, Manizales y Armenia.</p>
+      </div>
+
+      <p class="subhead reveal">Cuatro decisiones, tomadas al mismo tiempo</p>
+      <div class="decisions anim">
+        <span class="decisions-line"><span data-w="100"></span></span>
+        <div class="decision-grid stagger">
+          <article class="card decision reveal"><span class="decision-n">1</span><div class="decision-ic"><i data-ic="user"></i></div><h3>Qué voluntarios participan</h3></article>
+          <article class="card decision reveal"><span class="decision-n">2</span><div class="decision-ic"><i data-ic="users"></i></div><h3>Cómo se arman los equipos</h3></article>
+          <article class="card decision reveal"><span class="decision-n">3</span><div class="decision-ic"><i data-ic="pin"></i></div><h3>A qué ciudad va cada uno</h3></article>
+          <article class="card decision reveal"><span class="decision-n">4</span><div class="decision-ic"><i data-ic="building"></i></div><h3>Qué edificaciones se inspeccionan</h3></article>
+        </div>
+      </div>
+
+      <p class="subhead reveal" style="margin-top:44px">Los recursos de la misión</p>
+      <div class="res-grid stagger">
+        <article class="card res reveal">
+          <p class="res-val"><span data-count="30">0</span></p>
+          <p class="res-cap">voluntarios disponibles</p>
+        </article>
+        <article class="card res reveal">
+          <p class="res-val"><span data-count="40">0</span></p>
+          <p class="res-cap">edificaciones por inspeccionar</p>
+        </article>
+        <article class="card res reveal">
+          <p class="res-val"><span data-count="3">0</span> × <span data-count="8">0</span> h</p>
+          <p class="res-cap">días de trabajo por equipo</p>
+        </article>
+        <article class="card res res-dark reveal">
+          <p class="res-val">$<span data-count="10">0</span> M</p>
+          <p class="res-cap">presupuesto para voluntarios</p>
+        </article>
+      </div>
+
+      <div class="section-head sm reveal">
+        <p class="eyebrow">Cómo lo resolvimos</p>
+        <h2>Metodología empleada</h2>
+        <p>Abordamos el problema con un modelo de programación entera binaria, resuelto en GAMS con CPLEX.</p>
+      </div>
+
+      <div class="method anim">
+        <div class="method-grid stagger">
+          <article class="card mstep reveal"><span class="mstep-n">01</span><h3>Análisis del contexto</h3><p>Leímos la guía y organizamos los datos en matrices de Excel.</p></article>
+          <article class="card mstep reveal"><span class="mstep-n">02</span><h3>Supuestos y conjuntos</h3><p>30 voluntarios, 10 equipos, 3 ciudades y 40 edificaciones.</p></article>
+          <article class="card mstep reveal"><span class="mstep-n">03</span><h3>Modelo matemático</h3><p>Variables binarias X, Y y W; 19 restricciones; maximizar el puntaje.</p></article>
+          <article class="card mstep reveal"><span class="mstep-n">04</span><h3>Implementación</h3><p>GAMS lee el Excel con GDXXRW y CPLEX resuelve con un gap de 0 %.</p></article>
+          <article class="card mstep reveal"><span class="mstep-n">05</span><h3>Análisis de resultados</h3><p>Cobertura por ciudad, uso de recursos y sensibilidad.</p></article>
+          <article class="card mstep reveal"><span class="mstep-n">06</span><h3>Recomendaciones</h3><p>Cada una evaluada con una nueva corrida del modelo.</p></article>
+        </div>
+      </div>
+
+      <div class="cta-row reveal">
+        <a href="#/proyecto/resultados" class="btn btn-primary btn-lg">Ver los resultados <i data-ic="arrowR"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 RESULTADOS ============ -->
   <section class="panel" id="p-resultados" data-panel="resultados" hidden>
     <div class="wrap">
 
@@ -336,7 +401,7 @@
     </div>
   </section>
 
-  <!-- ============ 02 CONCLUSIONES ============ -->
+  <!-- ============ 03 CONCLUSIONES ============ -->
   <section class="panel" id="p-conclusiones" data-panel="conclusiones" hidden>
     <div class="wrap">
       <div class="section-head reveal">
@@ -363,7 +428,7 @@
     </div>
   </section>
 
-  <!-- ============ 03 RECOMENDACIONES ============ -->
+  <!-- ============ 04 RECOMENDACIONES ============ -->
   <section class="panel" id="p-recomendaciones" data-panel="recomendaciones" hidden>
     <div class="wrap">
       <div class="section-head reveal">

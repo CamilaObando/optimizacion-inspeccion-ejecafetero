@@ -770,7 +770,7 @@ function moveInk() {
   ink.style.width = a.offsetWidth + 'px';
 }
 function setTab(tab) {
-  if (!['resultados', 'conclusiones', 'recomendaciones'].includes(tab)) tab = 'resultados';
+  if (!['contexto', 'resultados', 'conclusiones', 'recomendaciones'].includes(tab)) tab = 'contexto';
   $$('.subnav-track a').forEach(a => { const on = a.dataset.tab === tab; a.classList.toggle('active', on); a.setAttribute('aria-selected', on); });
   moveInk();
   if (currentTab === tab) return;
@@ -797,7 +797,7 @@ function route() {
     scrollTo({ top: 0, behavior: 'auto' });
     arm(views[view]);
   }
-  if (view === 'proyecto') setTab(m[1] || 'resultados');
+  if (view === 'proyecto') setTab(m[1] || 'contexto');
   closeMenu();
 }
 
@@ -845,11 +845,11 @@ function init() {
   $('#stepPrev').addEventListener('click', () => goStep(step - 1));
   $('#stepNext').addEventListener('click', () => goStep(step + 1));
 
-  // Teclado para presentar: ← → recorren pasos/recomendaciones; 1-3 cambian de pestaña
+  // Teclado para presentar: ← → recorren pasos/recomendaciones; 1-4 cambian de pestaña
   document.addEventListener('keydown', e => {
     if (modal.classList.contains('open')) { if (e.key === 'Escape') closeModal(); return; }
     if (currentView !== 'proyecto' || e.target.closest('input, textarea') || e.metaKey || e.ctrlKey || e.altKey) return;
-    if (['1', '2', '3'].includes(e.key)) { location.hash = '#/proyecto/' + ['resultados', 'conclusiones', 'recomendaciones'][+e.key - 1]; return; }
+    if (['1', '2', '3', '4'].includes(e.key)) { location.hash = '#/proyecto/' + ['contexto', 'resultados', 'conclusiones', 'recomendaciones'][+e.key - 1]; return; }
     const dir = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
     if (!dir) return;
     if (currentTab === 'conclusiones' && !$('#analysis').hidden) { e.preventDefault(); goStep(step + dir); }
